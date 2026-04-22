@@ -1,0 +1,82 @@
+<script>
+const output = document.getElementById("output");
+
+const intro = [
+"$ curl -X GET https://zevnextdoor.github.io",
+"> connecting...",
+"> /// Access Granted ///"
+];
+
+const mainContent = [
+"$ about.me",
+"> user      : zevnextdoor",
+"> alias     : zev",
+"> bio       : cheat developer & roblox ugc creator",
+"> description   : creating",
+"",
+"$ Languages",
+"  ├ python",
+"  ├ javascript",
+"  ├ html",
+"  ├ lua",
+"  └ c++",
+"",
+"$ Interests",
+"  ├ automation",
+"  ├ web development",
+"  ├ cheat development",
+"  ├ gaming",
+"  └ art",
+"",
+"$ echo \"Thanks for visiting! <3\"",
+"",
+"# made with ♡ by zevnextdoor"
+];
+
+let speed = 20;
+
+// type one line
+function typeLine(text, callback) {
+  let i = 0;
+  const div = document.createElement("div");
+  div.className = "line";
+  output.appendChild(div);
+
+  function typing() {
+    if (i < text.length) {
+      div.textContent += text[i];
+      i++;
+      setTimeout(typing, speed);
+    } else {
+      callback && callback(div);
+    }
+  }
+
+  typing();
+}
+
+// type multiple lines
+function typeLines(lines, index = 0, callback) {
+  if (index < lines.length) {
+    typeLine(lines[index], () => {
+      typeLines(lines, index + 1, callback);
+    });
+  } else {
+    callback && callback();
+  }
+}
+
+// start animation
+typeLines(intro, 0, () => {
+
+  // wait a bit, then clear EVERYTHING
+  setTimeout(() => {
+    output.innerHTML = "";
+
+    // now type main content
+    typeLines(mainContent);
+
+  }, 1200); // how long intro stays
+
+});
+</script>
