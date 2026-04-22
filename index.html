@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>zevnextdoor</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  background: #000;
+  color: #00ff88;
+  font-family: 'Source Code Pro', monospace;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.terminal {
+  width: 600px;
+  max-width: 90%;
+  padding: 20px;
+  border: 1px solid #222;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #00ff88;
+}
+
+.topbar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+
+.line {
+  white-space: pre;
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal">
+  <div class="topbar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+  </div>
+
+  <div id="output"></div>
+</div>
+
+<script>
+const output = document.getElementById("output");
+
+const intro = [
+"$ curl -X GET https://zevnextdoor.github.io",
+"> connecting...",
+"> /// Access Granted ///"
+];
+
+const mainContent = [
+"$ about.me",
+"> user      : zevnextdoor",
+"> alias     : zev",
+"> bio       : cheat developer & roblox ugc creator",
+"> description   : creating",
+"",
+"$ Languages",
+"  ├ python",
+"  ├ javascript",
+"  ├ html",
+"  ├ lua",
+"  └ c++",
+"",
+"$ Interests",
+"  ├ automation",
+"  ├ web development",
+"  ├ cheat development",
+"  ├ gaming",
+"  └ art",
+"",
+"$ echo \"Thanks for visiting! <3\"",
+"> Thanks for visiting! <3",
+"",
+"# made with ♡ by zevnextdoor"
+];
+
+let speed = 20;
+
+function typeLine(text, callback) {
+  let i = 0;
+  const div = document.createElement("div");
+  div.className = "line";
+  output.appendChild(div);
+
+  function typing() {
+    if (i < text.length) {
+      div.textContent += text[i];
+      i++;
+      setTimeout(typing, speed);
+    } else {
+      callback && callback();
+    }
+  }
+
+  typing();
+}
+
+function typeLines(lines, index = 0, callback) {
+  if (index < lines.length) {
+    typeLine(lines[index], () => {
+      typeLines(lines, index + 1, callback);
+    });
+  } else {
+    callback && callback();
+  }
+}
+
+// run
+typeLines(intro, 0, () => {
+  setTimeout(() => {
+    output.innerHTML = "";
+    typeLines(mainContent);
+  }, 1200);
+});
+</script>
+
+</body>
+</html>
