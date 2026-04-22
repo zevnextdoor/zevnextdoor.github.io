@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>zevnextdoor</title>
+<title>zevware</title>
 <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
 
 <style>
@@ -47,6 +47,11 @@ body {
   white-space: pre;
 }
 
+/* :point_down: adds spacing between sections */
+.section-space {
+  height: 10px;
+}
+
 .footer {
   margin-top: 15px;
   color: #00ff88;
@@ -85,23 +90,26 @@ const mainContent = [
 "> user      : zevnextdoor",
 "> alias     : zev",
 "> bio       : cheat developer & roblox ugc creator",
-"> description   : creating",
-"",
+"> description   : contributed to 10M+ robux in sales",
+"__SPACE__",
+
 "$ Languages",
 "  ├ python",
 "  ├ javascript",
 "  ├ html",
 "  ├ lua",
 "  └ c++",
-"",
+"__SPACE__",
+
 "$ Interests",
 "  ├ automation",
 "  ├ web development",
 "  ├ cheat development",
 "  ├ gaming",
-"  └ art",
-"",
-"$ echo \"Thanks for visiting! <3\""
+"  └ music",
+"__SPACE__",
+
+"$ echo \Thanks for visiting! <3\"
 ];
 
 let speed = 20;
@@ -127,9 +135,23 @@ function typeLine(text, callback) {
 
 function typeLines(lines, index = 0, callback) {
   if (index < lines.length) {
-    typeLine(lines[index], () => {
-      typeLines(lines, index + 1, callback);
-    });
+
+    //  spacing logic
+    if (lines[index] === "__SPACE__") {
+      const space = document.createElement("div");
+      space.className = "section-space";
+      output.appendChild(space);
+
+      setTimeout(() => {
+        typeLines(lines, index + 1, callback);
+      }, 150);
+
+    } else {
+      typeLine(lines[index], () => {
+        typeLines(lines, index + 1, callback);
+      });
+    }
+
   } else {
     callback && callback();
   }
