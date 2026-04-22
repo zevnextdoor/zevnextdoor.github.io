@@ -1,132 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>zevnextdoor</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  background: #000;
+  color: #00ff88;
+  font-family: 'Source Code Pro', monospace;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.terminal {
+  width: 600px;
+  max-width: 90%;
+  padding: 20px;
+  border: 1px solid #222;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #00ff88;
+}
+
+.topbar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+
+.line {
+  white-space: pre;
+}
+
+.footer {
+  margin-top: 15px;
+  color: #00ff88;
+  font-size: 12px;
+  opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal">
+  <div class="topbar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+  </div>
+  <div id="output"></div>
+</div>
+
+<div class="footer">
+  # made with ♡ by zevnextdoor
+</div>
+
 <script>
-const output = document.getElementById("output");
+document.addEventListener("DOMContentLoaded", () => {
 
-const intro = [
-"$ curl -X GET https://zevnextdoor.github.io",
-"> connecting...",
-"> /// Access Granted ///"
-];
+  const output = document.getElementById("output");
 
-const sections = [
-[
-"$ about.me",
-"> user      : zevnextdoor",
-"> alias     : zev",
-"> bio       : cheat developer & roblox ugc creator",
-"> description   : contributed to 10M+ robux in sales"
-],
-[
-"$ Languages",
-"  ├ python",
-"  ├ javascript",
-"  ├ html",
-"  ├ lua",
-"  └ c++"
-],
-[
-"$ Interests",
-"  ├ automation",
-"  ├ web development",
-"  ├ cheat development",
-"  ├ gaming",
-"  └ music"
-],
-[
-"$ echo \Thanks for visiting! <3\"
-]
-];
+  const intro = [
+    "$ curl -X GET https://zevnextdoor.github.io",
+    "> connecting...",
+    "> /// Access Granted ///"
+  ];
 
-let speed = 20;
+  const sections = [
+    [
+      "$ about.me",
+      "> user      : zevnextdoor",
+      "> alias     : zev",
+      "> bio       : cheat developer & roblox ugc creator",
+      "> description   : contributed to 10M+ robux in sales"
+    ],
+    [
+      "$ Languages",
+      "  ├ python",
+      "  ├ javascript",
+      "  ├ html",
+      "  ├ lua",
+      "  └ c++"
+    ],
+    [
+      "$ Interests",
+      "  ├ automation",
+      "  ├ web development",
+      "  ├ cheat development",
+      "  ├ gaming",
+      "  └ music"
+    ],
+    [
+      "$ echo \Thanks for visiting! <3\"
+    ]
+  ];
 
-function typeLine(text, parent, callback) {
-  let i = 0;
-  const div = document.createElement("div");
-  div.className = "line";
-  parent.appendChild(div);
+  let speed = 20;
 
-  function typing() {
-    if (i < text.length) {
-      div.textContent += text[i];
-      i++;
-      setTimeout(typing, speed);
-    } else {
-      callback && callback();
-    }
-  }
+  function typeLine(text, parent, callback) {
+    let i = 0;
+    const div = document.createElement("div");
+    div.className = "line";
+    parent.appendChild(div);
 
-  typing();
-}
-
-function addSpacing() {
-  const space = document.createElement("div");
-  space.style.height = "14px";
-  output.appendChild(space);
-}
-
-function typeSection(section, callback) {
-  const sectionDiv = document.createElement("div");
-  output.appendChild(sectionDiv);
-
-  let i = 0;
-
-  function nextLine() {
-    if (i < section.length) {
-      typeLine(section[i], sectionDiv, () => {
+    function typing() {
+      if (i < text.length) {
+        div.textContent += text[i];
         i++;
-        nextLine();
-      });
-    } else {
-      addSpacing(); // 👈 safe spacing AFTER section finishes
-      callback && callback();
-    }
-  }
-
-  nextLine();
-}
-
-function typeAll(index = 0, callback) {
-  if (index < sections.length) {
-    typeSection(sections[index], () => {
-      setTimeout(() => typeAll(index + 1, callback), 150);
-    });
-  } else {
-    callback && callback();
-  }
-}
-
-// run intro then main
-function start() {
-  let i = 0;
-
-  function typeIntro() {
-    if (i < intro.length) {
-      const div = document.createElement("div");
-      div.className = "line";
-      output.appendChild(div);
-
-      let j = 0;
-      function typing() {
-        if (j < intro[i].length) {
-          div.textContent += intro[i][j];
-          j++;
-          setTimeout(typing, speed);
-        } else {
-          i++;
-          typeIntro();
-        }
+        setTimeout(typing, speed);
+      } else {
+        callback && callback();
       }
+    }
 
-      typing();
-    } else {
-      setTimeout(() => {
-        output.innerHTML = "";
-        typeAll();
-      }, 1000);
+    typing();
+  }
+
+  function addSpacing() {
+    const space = document.createElement("div");
+    space.style.height = "14px";
+    output.appendChild(space);
+  }
+
+  function typeSection(section, callback) {
+    const sectionDiv = document.createElement("div");
+    output.appendChild(sectionDiv);
+
+    let i = 0;
+
+    function nextLine() {
+      if (i < section.length) {
+        typeLine(section[i], sectionDiv, () => {
+          i++;
+          nextLine();
+        });
+      } else {
+        addSpacing();
+        callback && callback();
+      }
+    }
+
+    nextLine();
+  }
+
+  function typeAll(index = 0) {
+    if (index < sections.length) {
+      typeSection(sections[index], () => {
+        setTimeout(() => typeAll(index + 1), 150);
+      });
     }
   }
 
-  typeIntro();
-}
+  function start() {
+    let i = 0;
 
-start();
+    function typeIntro() {
+      if (i < intro.length) {
+        const div = document.createElement("div");
+        div.className = "line";
+        output.appendChild(div);
+
+        let j = 0;
+
+        function typing() {
+          if (j < intro[i].length) {
+            div.textContent += intro[i][j];
+            j++;
+            setTimeout(typing, speed);
+          } else {
+            i++;
+            typeIntro();
+          }
+        }
+
+        typing();
+      } else {
+        setTimeout(() => {
+          output.innerHTML = "";
+          typeAll();
+        }, 1000);
+      }
+    }
+
+    typeIntro();
+  }
+
+  start();
+});
 </script>
+
+</body>
+</html>
