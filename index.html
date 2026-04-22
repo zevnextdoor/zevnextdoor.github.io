@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>zevnextdoor</title>
+<title>zevware</title>
 <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
 
 <style>
@@ -72,136 +72,77 @@ body {
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+const output = document.getElementById("output");
 
-  const output = document.getElementById("output");
+const intro = [
+"$ curl -X GET https://zevnextdoor.github.io",
+"> connecting...",
+"> /// Access Granted ///"
+];
 
-  const intro = [
-    "$ curl -X GET https://zevnextdoor.github.io",
-    "> connecting...",
-    "> /// Access Granted ///"
-  ];
+const mainContent = [
+"$ about.me",
+"> user      : zevnextdoor",
+"> alias     : zev",
+"> bio       : cheat developer & roblox ugc creator",
+"> description   : contributed to 10M+ robux in sales",
+"",
+"$ Languages",
+"  ├ python",
+"  ├ javascript",
+"  ├ html",
+"  ├ lua",
+"  └ c++",
+"",
+  
+"$ Interests",
+"  ├ automation",
+"  ├ web development",
+"  ├ cheat development",
+"  ├ gaming",
+"  └ music",
+"",
+  
+"$ echo \"Thanks for visiting! <3\""
+];
 
-  const sections = [
-    [
-      "$ about.me",
-      "> user      : zevnextdoor",
-      "> alias     : zev",
-      "> bio       : cheat developer & roblox ugc creator",
-      "> description   : contributed to 10M+ robux in sales"
-    ],
-    [
-      "$ Languages",
-      "  ├ python",
-      "  ├ javascript",
-      "  ├ html",
-      "  ├ lua",
-      "  └ c++"
-    ],
-    [
-      "$ Interests",
-      "  ├ automation",
-      "  ├ web development",
-      "  ├ cheat development",
-      "  ├ gaming",
-      "  └ music"
-    ],
-    [
-      "$ echo \Thanks for visiting! <3\"
-    ]
-  ];
+let speed = 20;
 
-  let speed = 20;
+function typeLine(text, callback) {
+  let i = 0;
+  const div = document.createElement("div");
+  div.className = "line";
+  output.appendChild(div);
 
-  function typeLine(text, parent, callback) {
-    let i = 0;
-    const div = document.createElement("div");
-    div.className = "line";
-    parent.appendChild(div);
-
-    function typing() {
-      if (i < text.length) {
-        div.textContent += text[i];
-        i++;
-        setTimeout(typing, speed);
-      } else {
-        callback && callback();
-      }
-    }
-
-    typing();
-  }
-
-  function addSpacing() {
-    const space = document.createElement("div");
-    space.style.height = "14px";
-    output.appendChild(space);
-  }
-
-  function typeSection(section, callback) {
-    const sectionDiv = document.createElement("div");
-    output.appendChild(sectionDiv);
-
-    let i = 0;
-
-    function nextLine() {
-      if (i < section.length) {
-        typeLine(section[i], sectionDiv, () => {
-          i++;
-          nextLine();
-        });
-      } else {
-        addSpacing();
-        callback && callback();
-      }
-    }
-
-    nextLine();
-  }
-
-  function typeAll(index = 0) {
-    if (index < sections.length) {
-      typeSection(sections[index], () => {
-        setTimeout(() => typeAll(index + 1), 150);
-      });
+  function typing() {
+    if (i < text.length) {
+      div.textContent += text[i];
+      i++;
+      setTimeout(typing, speed);
+    } else {
+      callback && callback();
     }
   }
 
-  function start() {
-    let i = 0;
+  typing();
+}
 
-    function typeIntro() {
-      if (i < intro.length) {
-        const div = document.createElement("div");
-        div.className = "line";
-        output.appendChild(div);
-
-        let j = 0;
-
-        function typing() {
-          if (j < intro[i].length) {
-            div.textContent += intro[i][j];
-            j++;
-            setTimeout(typing, speed);
-          } else {
-            i++;
-            typeIntro();
-          }
-        }
-
-        typing();
-      } else {
-        setTimeout(() => {
-          output.innerHTML = "";
-          typeAll();
-        }, 1000);
-      }
-    }
-
-    typeIntro();
+function typeLines(lines, index = 0, callback) {
+  if (index < lines.length) {
+    typeLine(lines[index], () => {
+      typeLines(lines, index + 1, callback);
+    });
+  } else {
+    callback && callback();
   }
+}
 
-  start();
+// run animation
+typeLines(intro, 0, () => {
+  setTimeout(() => {
+    output.innerHTML = "";
+    typeLines(mainContent);
+  }, 1200);
 });
 </script>
 
