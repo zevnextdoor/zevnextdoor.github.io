@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>zevnextdoor</title>
+  <style>
+    body {
+      background: black;
+      color: #00ff88;
+      font-family: monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .terminal {
+      border: 1px solid #333;
+      padding: 20px;
+      width: 500px;
+      box-shadow: 0 0 10px #00ff88;
+    }
+
+    .title {
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal">
+    <div class="title">/\\_/\\</div>
+    <p>( o.o ) &nbsp; zevware@v1</p>
+    <p>> user: zevnextdoor</p>
+    <p>> bio: cheat developer & ugc creator</p>
+    <p>> languages: python,  js, lua, c++</p>
+    <p>> interests: coding, games</p>
+  </div>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>zevnextdoor</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  background: #000;
+  color: #00ff88;
+  font-family: 'Source Code Pro', monospace;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.terminal {
+  width: 600px;
+  max-width: 90%;
+  padding: 20px;
+  border: 1px solid #222;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #00ff88;
+}
+
+.topbar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 15px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+
+.line {
+  white-space: pre;
+}
+
+.cursor {
+  display: inline-block;
+  width: 8px;
+  background: #00ff88;
+  margin-left: 3px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.watermark {
+  margin-top: 20px;
+  color: #777;
+  font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal">
+  <div class="topbar">
+    <div class="dot red"></div>
+    <div class="dot yellow"></div>
+    <div class="dot green"></div>
+  </div>
+
+  <div id="output"></div>
+</div>
+
+<div class="watermark">
+  # made with ♡ by zevnextdoor
+</div>
+
+<script>
+const lines = [
+"$ curl -X GET https://zevnextdoor.github.io",
+"> connecting...",
+"> /// Access Granted ///",
+"",
+"$ cat about.me",
+"> user      : zevnextdoor",
+"> alias     : zev",
+"> bio       : cheat devloper & roblox ugc creator",
+"> description   : creating ",
+"",
+"$ Languages ",
+"  ├ python",
+"  ├ javascript",
+"  ├ html",
+"  ├ lua",
+"  └ c++",
+"",
+"$ Interests",
+"  ├ automation",
+"  ├ web development",
+"  ├ cheat devlopment",
+"  ├ gaming",
+"  └ art",
+"",
+"$ echo \"Thanks for visiting! <3\"",
+"> Thanks for visiting! <3 "
+];
+
+let i = 0;
+let j = 0;
+const speed = 20;
+
+const output = document.getElementById("output");
+
+function type() {
+  if (i < lines.length) {
+    if (j < lines[i].length) {
+      if (!output.lastChild) {
+        const div = document.createElement("div");
+        div.className = "line";
+        output.appendChild(div);
+      }
+      output.lastChild.textContent += lines[i][j];
+      j++;
+      setTimeout(type, speed);
+    } else {
+      const cursor = document.createElement("span");
+      cursor.className = "cursor";
+      output.lastChild.appendChild(cursor);
+
+      i++;
+      j = 0;
+
+      const newLine = document.createElement("div");
+      newLine.className = "line";
+      output.appendChild(newLine);
+
+      setTimeout(type, 300);
+    }
+  }
+}
+
+type();
+</script>
+
+</body>
+</html>
